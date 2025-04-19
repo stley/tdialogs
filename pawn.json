@@ -1,0 +1,12 @@
+{
+	"user": "TommyB123",
+	"repo": "tdialogs",
+	"tag": "0.0.1",
+	"entry": "test.pwn",
+	"output": "gamemodes/test.amx",
+	"dependencies": [
+		"openmultiplayer/omp-stdlib",
+		"pawn-lang/samp-stdlib@open.mp",
+		"pawn-lang/pawn-stdlib@open.mp",
+	]
+}
