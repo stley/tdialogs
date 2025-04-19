@@ -22,7 +22,7 @@ static enum
     TDIALOG_ID_OPTIONS_INDEX,
 }
 
-#define TDIALOG_DIALOG_ID_END TDIALOG_ID_OPTIONS_INDEX //always match to the bottom constant in the enum above
+static const TDIALOG_DIALOG_ID_END = TDIALOG_ID_OPTIONS_INDEX //always match to the bottom constant in the enum above
 
 enum _:DIALOG_RESPONSE
 {
@@ -43,7 +43,7 @@ enum _:DIALOG_RESPONSE
 static Task:DialogTask[MAX_PLAYERS] = {INVALID_TASK, ...};
 
 //Dynamic list we can use to keep track of arbitrary indexes or other dialog-related data
-new List:DialogOptions[MAX_PLAYERS] = {INVALID_LIST, ...};
+new List:DialogData[MAX_PLAYERS] = {INVALID_LIST, ...};
 
 //Callback handlers so we can clean up across restarts
 new CallbackHandler:PlayerConnectHandler = INVALID_CALLBACK_HANDLER;
@@ -77,7 +77,7 @@ public TDialogs_PlayerConnect(playerid)
 {
     ResetPlayerDialogVariables(playerid);
 
-    DialogOptions[playerid] = list_new();
+    DialogData[playerid] = list_new();
 }
 
 forward TDialogs_PlayerDisconnect(playerid, reason);
@@ -336,7 +336,7 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
                 return 1;
             }
 
-            task_set_result(task, list_get(DialogOptions[playerid], listitem));
+            task_set_result(task, list_get(DialogData[playerid], listitem));
             return 1;
         }
     }
@@ -347,10 +347,10 @@ static ResetPlayerDialogVariables(playerid)
 {
     DeleteDialogTask(playerid);
 
-    if(list_valid(DialogOptions[playerid]))
+    if(list_valid(DialogData[playerid]))
     {
         //Using deep delete just in case people do weird things with the list
-        list_delete_deep(DialogOptions[playerid]);
+        list_delete_deep(DialogData[playerid]);
     }
 }
 
