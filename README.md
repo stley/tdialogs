@@ -72,30 +72,40 @@ Simple PawnPlus string wrapper for `ShowPlayerDialog`
 ShowAsyncDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[] = "")
 ```
 Shows an asynchronous dialog with the full dialog response array.
+
 Used with `await_arr(response) ShowAsyncDialog(...)`
 
 ```pawn
 ShowAsyncNumberInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog specifically to parse numeric input.
+
 If an integer is not received, the dialog will simply be shown again.
+
 If the player closes the dialog/presses ESC, `cellmin` is returned.
+
 Used with `new number = await ShowAsyncNumberInputDialog(...)`
 
 ```pawn
 ShowAsyncFloatInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog specifically to parse numeric input.
+
 If a float is not received, the dialog will simply be shown again.
+
 If the player closes the dialog/presses ESC, `FLOAT_NAN` is returned.
+
 Used with `new Float:number = Float:await ShowAsyncFloatInputDialog(...)`
 
 ```pawn
 ShowAsyncStringInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog specifically to parse string input.
+
 If an empty string is received, the dialog will simply be shown again.
+
 If the player closes the dialog/presses ESC, a null string is returned. Use `isnull` to check.
+
 Used with `await_str(string) ShowAsyncStringInputDialog(...)`
 
 ```pawn
@@ -107,27 +117,34 @@ Identical to `ShowAsyncStringInputDialog` but with the password dialog style.
 ShowAsyncListitemTextDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog that only returns the text passed through a listitem.
+
 If the player closes the dialog/presses ESC, a null string is returned. Use `isnull` to check.
+
 Used with `await_str(string) ShowAsyncListitemTextDialog(...)`
 
 ```pawn
 ShowAsyncListitemIndexDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog that only returns the index of the listitem that was clicked.
+
 If the player closes the dialog/presses ESC, `-1` is returned.
+
 Used with `new index = await ShowAsyncListitemIndexDialog(...)`
 
 ```pawn
 ShowAsyncConfirmationDialog(playerid, const title[], const body[], const button1[], const button2[] = "")
 ```
 Shows an asynchronous dialog that only returns the response status as a boolean.
+
 Used with `new bool:confirm = bool:await ShowAsyncConfirmationDialog`
 
 ```pawn
 ShowAsyncEntityIndexDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 ```
 Shows an asynchronous dialog that returns the value of the player's `DialogData` [list](https://github.com/IS4Code/PawnPlus/wiki/Lists) found at `listitem`. Read more [here](https://github.com/TommyB123/tdialogs/edit/main/README.md#dialog-data) or in the example below.
+
 If the player closes the dialog/presses ESC, `-1` is returned.
+
 Used with `new id = ShowAsyncEntityIndexDialog(...)`
 
 # Examples
