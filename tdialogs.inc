@@ -86,148 +86,110 @@ public TDialogs_PlayerDisconnect(playerid, reason)
     ResetPlayerDialogVariables(playerid);
 }
 
-stock Task:ShowAsyncDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[] = "")
+static stock Task:SendTDialog(playerid, dialogid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_FULL, style, title, body, button1, button2);
+    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, dialogid, style, title, body, button1, button2);
 
     DeleteDialogTask(playerid);
     return DialogTask[playerid] = task_new();
+}
+
+static stock Task:SendTDialog_s(playerid, dialogid, DIALOG_STYLE:style, String:title, String:body, const button1[], const button2[])
+{
+    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, dialogid, style, title, body, button1, button2);
+
+    DeleteDialogTask(playerid);
+    return DialogTask[playerid] = task_new();
+}
+
+stock Task:ShowAsyncDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[] = "")
+{
+    return SendTDialog(playerid, TDIALOG_ID_FULL, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncDialog_s(playerid, DIALOG_STYLE:style, String:title, String:body, const button1[], const button2[] = "")
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_FULL, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_FULL, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncNumberInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_NUMBER_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_NUMBER_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncNumberInputDialog_s(playerid, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_NUMBER_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_NUMBER_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncFloatInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_FLOAT_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_FLOAT_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncFloatInputDialog_s(playerid, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_FLOAT_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_FLOAT_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncStringInputDialog(playerid, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncStringInputDialog_s(playerid, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_INPUT, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncPasswordDialog(playerid, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncPasswordDialog_s(playerid, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncListitemTextDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_LISTITEM_TEXT, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_LISTITEM_TEXT, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncListitemTextDialog_s(playerid, DIALOG_STYLE:style, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_LISTITEM_TEXT, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_LISTITEM_TEXT, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncListitemIndexDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_LISTITEM_INDEX, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_LISTITEM_INDEX, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncListitemIndexDialog_s(playerid, DIALOG_STYLE:style, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_LISTITEM_INDEX, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_LISTITEM_INDEX, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncConfirmationDialog(playerid, const title[], const body[], const button1[], const button2[] = "")
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_LISTITEM_INDEX, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_CONFIRMATION, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncConfirmationDialog_s(playerid, ConstAmxStrring:title, ConstAmxStrring:body, const button1[], const button2[] = "")
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_LISTITEM_INDEX, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_CONFIRMATION, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncEntityIndexDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiissss", playerid, TDIALOG_ID_OPTIONS_INDEX, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog(playerid, TDIALOG_ID_OPTIONS_INDEX, style, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncEntityIndexDialog_s(playerid, DIALOG_STYLE:style, String:title, String:body, const button1[], const button2[])
 {
-    pawn_call_native("ShowPlayerDialog", "iiiSSss", playerid, TDIALOG_ID_OPTIONS_INDEX, style, title, body, button1, button2);
-
-    DeleteDialogTask(playerid);
-    return DialogTask[playerid] = task_new();
+    return SendTDialog_s(playerid, TDIALOG_ID_OPTIONS_INDEX, style, title, body, button1, button2);
 }
 
 forward TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext[]);
