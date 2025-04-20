@@ -24,7 +24,7 @@ Include in your code and begin using the library:
 ```
 
 # Introduction
-As stated above, tdialogs is a PawnPlus-powered library that can be used to handle dialog responses asynchronously in single PAWN functions. Here's a quick example.
+As stated above, tdialogs is a PawnPlus-powered library that can be used to handle dialog responses asynchronously in a single PAWN function. Here's a quick example.
 ```pawn
 MyCoolFunction()
 {
@@ -47,9 +47,9 @@ MyCoolFunction()
 If you're familiar with all of the dialog handler libraries available, you might be wondering sets this library apart from them. The simple answer is I've included numerous functions to quickly fetch specific/single values from dialog responses. Do you simply need to show quick yes/no confirmation dialog? No problem. Use `ShowAsyncConfirmationDialog`. What about buying a user-submitted quantity from an in-game shop? `ShowAsyncNumberInputDialog` has you covered. Examples usages can be found [here](https://github.com/TommyB123/tdialogs/edit/main/README.md#examples).
 
 ## Dialog Data
-tdialogs also has a small but handy feature for tracking IDs or other data throughout the entire dialog flow. Each player gets a dynamic [PawnPlus list](https://github.com/IS4Code/PawnPlus/wiki/Lists) allocated for them on login. This list can be used to store things like house indexes, vehicle IDs or other data matched with rows of text inside your dialogs. This is done for the purpose retaining identifiers and avoiding needless for loop lookups or other somewhat costly methods to fetch data you've already found.
+tdialogs also has a small but handy feature for tracking IDs or other data throughout the entire dialog flow. Each player gets a dynamic [PawnPlus list](https://github.com/IS4Code/PawnPlus/wiki/Lists) allocated for them on login. This list can be used to store things like house indexes, vehicle IDs or other data matched with rows of text inside your dialogs. This is done for the purpose of retaining identifiers and avoiding needless loop lookups or other somewhat costly methods to fetch data you've already found.
 
-Alongside this list, there's also a special dialog function made with its combined use in mind. When you're formatted a dialog and pushed accompanying entity IDs, such as a house, to the `DialogData` list, `ShowAsyncEntityIndexDialog` can be used to fetch the house ID a player clicked on with a single line of code. You can see an example in the examples section below.
+Alongside this list, there's also a special dialog function made with its combined use in mind. When you've formatted a dialog and pushed accompanying entity IDs, such as a house, to the `DialogData` list, `ShowAsyncEntityIndexDialog` can be used to fetch the house ID a player clicked on with a single line of code. You can see it in action in the examples section below.
 
 It's important to note that the list **MUST** be cleaned out by using `list_clear` before you populate it with IDs when showing a new dialog. Otherwise, data from previously shown dialogs will bleed into subsequent dialog showings.
 
@@ -58,6 +58,7 @@ tdialogs only has one constant that can be redefined, which is `TDIALOG_DIALOG_I
 
 # Prerequisites
 It's advised that you add `#define PP_SYNTAX_AWAIT` before including PawnPlus. This allows you to use the proper await methods this library was written in mind with.
+
 It's also advised to add `#define PP_SYNTAX_YIELD` as well. This is a quick alias for `task_yield`, which is used to yield temporary values to functions when a function waits for a task. For instance, if you don't `yield 1;` inside of a command, it's likely you will receive an erroneous unknown command error in chat.
 
 # Functions
