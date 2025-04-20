@@ -46,9 +46,9 @@ static Task:DialogTask[MAX_PLAYERS] = {INVALID_TASK, ...};
 new List:DialogData[MAX_PLAYERS] = {INVALID_LIST, ...};
 
 //Callback handlers so we can clean up across restarts
-new CallbackHandler:PlayerConnectHandler = INVALID_CALLBACK_HANDLER;
-new CallbackHandler:PlayerDisconnectHandler = INVALID_CALLBACK_HANDLER;
-new CallbackHandler:DialogResponseHandler = INVALID_CALLBACK_HANDLER;
+static CallbackHandler:PlayerConnectHandler = INVALID_CALLBACK_HANDLER;
+static CallbackHandler:PlayerDisconnectHandler = INVALID_CALLBACK_HANDLER;
+static CallbackHandler:DialogResponseHandler = INVALID_CALLBACK_HANDLER;
 
 //Native wrapper to add a PawnPlus string variant of vanilla ShowPlayerDialog
 native ShowPlayerDialog_s(playerid, dialogid, DIALOG_STYLE:style, ConstAmxString:title, ConstAmxString:body, const button1[], const button2[], AnyTag:...) = ShowPlayerDialog;
