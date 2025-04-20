@@ -308,10 +308,12 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
                 new DIALOG_STYLE:style, title[64], body[4096], button1[12], button2[12];
                 GetPlayerDialogData(playerid, style, title, 64, body, 4096, button1, 12, button2, 12); //why was this function written like this
                 task_bind(task, "_InputDialogErrorRedirect", "iissss", playerid, TDIALOG_ID_STRING_INPUT, title, body, button1, button2);
+                return 1;
             }
 
 
             task_set_result_str(task, inputtext);
+            return 1;
         }
         case TDIALOG_ID_LISTITEM_INDEX:
         {
