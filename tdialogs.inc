@@ -22,7 +22,7 @@ static enum
     TDIALOG_ID_OPTIONS_INDEX,
 }
 
-static const TDIALOG_DIALOG_ID_END = TDIALOG_ID_OPTIONS_INDEX //always match to the bottom constant in the enum above
+static const TDIALOG_DIALOG_ID_END = TDIALOG_ID_OPTIONS_INDEX; //always match to the bottom constant in the enum above
 
 enum _:DIALOG_RESPONSE
 {
