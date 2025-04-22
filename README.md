@@ -236,6 +236,7 @@ ShowHouseTeleportDialog(playerid)
 ```
 
 Showing a paginated dialog with 10 rows per page.
+```
 ShowOwnedVehiclesDialog(playerid)
 {
 	new string[128];
@@ -258,7 +259,7 @@ ShowOwnedVehiclesDialog(playerid)
 	SetPlayerPos(playerid, x, y, z);
 	SendClientMessage(playerid, -1, "You have teleported to your %s", ReturnVehicleName(vehicleid));
 }
-
+```
 
 # Credits
 me
