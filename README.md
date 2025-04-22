@@ -46,6 +46,8 @@ MyCoolFunction()
 
 If you're familiar with all of the dialog handler libraries available, you might be wondering sets this library apart from them. The simple answer is I've included numerous functions to quickly fetch specific/single values from dialog responses. Do you simply need to show quick yes/no confirmation dialog? No problem. Use `ShowAsyncConfirmationDialog`. What about buying a user-submitted quantity from an in-game shop? `ShowAsyncNumberInputDialog` has you covered. Examples usages can be found [here](https://github.com/TommyB123/tdialogs/edit/main/README.md#examples).
 
+As of version 1.1.0, automatically paginated dialogs are also included and can be created with `AddPaginatedDialogRow` and `ShowAsyncPaginatedDialog`. Full function arguments and example below.
+
 ## Dialog Data
 tdialogs also has a small but handy feature for tracking IDs or other data throughout the entire dialog flow. Each player gets a dynamic [PawnPlus list](https://github.com/IS4Code/PawnPlus/wiki/Lists) allocated for them on login. This list can be used to store things like house indexes, vehicle IDs or other data matched with rows of text inside your dialogs. This is done for the purpose of retaining identifiers and avoiding needless loop lookups or other somewhat costly methods to fetch data you've already found.
 
@@ -54,7 +56,12 @@ Alongside this list, there's also a special dialog function made with its combin
 It's important to note that the list **MUST** be cleaned out by using `list_clear` before you populate it with IDs when showing a new dialog. Otherwise, data from previously shown dialogs will bleed into subsequent dialog showings.
 
 # Constants
-tdialogs only has one constant that can be redefined, which is `TDIALOG_DIALOG_ID_BEGIN` (defaults to 1234). The library reserves 8 dialog IDs for each dialog type (not to be confused with dialog styles). `TDIALOG_DIALOG_ID_BEGIN` is the first ID that will be used, followed by the 7 subsequent numbers after. Note any existing dialog IDs you have and adjust accordingly.
+
+| Constant | Default Value | Description  |
+| ------------- | ------------- | ------------- |
+| `TDIALOG_DIALOG_ID_BEGIN`  | `1234`  | The library reserves 9 dialog IDs for each dialog type (not to be confused with dialog styles). is the first ID that will be used, followed by the 8 subsequent numbers after. Note any existing dialog IDs you have and adjust accordingly. |
+| `PAGINATED_NEXT_TEXT`  | `"--> Next Page"`  | The string that will show when a paginated dialog prompts you to view the next page.  |
+| `PAGINATED_PREVIOUS_TEXT`  | `"<-- Previous Page"`  | The string that wil show when you can go back to a previous page in a paginated dialog.  |
 
 # Prerequisites
 It's advised that you add `#define PP_SYNTAX_AWAIT` before including PawnPlus. This allows you to use the proper await methods this library was written in mind with.
@@ -137,7 +144,7 @@ ShowAsyncConfirmationDialog(playerid, const title[], const body[], const button1
 ```
 Shows an asynchronous dialog that only returns the response status as a boolean.
 
-Used with `new bool:confirm = bool:await ShowAsyncConfirmationDialog`
+Used with `new bool:confirm = bool:await ShowAsyncConfirmationDialog(...)`
 
 ```pawn
 ShowAsyncEntityIndexDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
@@ -146,7 +153,25 @@ Shows an asynchronous dialog that returns the value of the player's `DialogData`
 
 If the player closes the dialog/presses ESC, `-1` is returned.
 
-Used with `new id = ShowAsyncEntityIndexDialog(...)`
+Used with `new id = await ShowAsyncEntityIndexDialog(...)`
+
+```pawn
+ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page, const title[], List:rows, const button1[], const button2[], const tablist_header_text[] = "")
+```
+Shows an asynchronous dialog that paginates supplied text based on the supplied rows per page. Returns a full dialog response.
+
+This function is only compatible with `DIALOG_STYLE_TABLIST_HEADERS`, `DIALOG_STYLE_TABLIST` and `DIALOG_STYLE_LIST`.
+
+The `tablist_header_text` argument is only to be used with the `DIALOG_STYLE_TABLIST_HEADERS` and, as the name implies, is the header text for the dialog.
+
+Used with `await_arr(response) ShowAsyncPaginatedDialog`
+
+```pawn
+AddPaginatedDialogRow(List:list, const text[], extraid = 0)
+```
+Adds a row to a paginated dialog. extraid argument can be used to pass additional IDs relevant to the line of text you're appending.
+
+Required when building a paginated dialog.
 
 # Examples
 Here's some slightly more in-depth examples.
@@ -209,6 +234,30 @@ ShowHouseTeleportDialog(playerid)
 	}
 }
 ```
+
+Showing a paginated dialog with 10 rows per page.
+ShowOwnedVehiclesDialog(playerid)
+{
+	new string[128];
+	list_clear(DialogData[playerid]);
+	for(new i = 1; i <= MAX_VEHICLES; ++i)
+	{
+		if(PlayerOwnsVehicle(playerid, i))
+		{
+			format(string, sizeof(string), "%s\t%s", ReturnVehicleName(i), ReturnVehicleLocation(i));
+			AddPaginatedDialogRow(DialogData[playerid], string, i);
+		}
+	}
+
+	new response[DIALOG_RESPONSE];
+	await_arr(response) ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE_TABLIST_HEADERS, 10, "Your Vehicles", DialogData[playerid], "Teleport", "Cancel", "Vehicle\tLocation");
+	if(!response[DIALOG_RESPONSE_RESPONSE]) return false;
+
+	new vehicleid = response[DIALOG_RESPONSE_EXTRAID], Float:x, Float:y, Float:z;
+	GetVehiclePos(vehicleid, x, y, z);
+	SetPlayerPos(playerid, x, y, z);
+	SendClientMessage(playerid, -1, "You have teleported to your %s", ReturnVehicleName(vehicleid));
+}
 
 
 # Credits
