@@ -236,7 +236,7 @@ ShowHouseTeleportDialog(playerid)
 ```
 
 Showing a paginated dialog with 10 rows per page.
-```
+```pawn
 ShowOwnedVehiclesDialog(playerid)
 {
 	new string[128];
