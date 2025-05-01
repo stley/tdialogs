@@ -44,7 +44,7 @@ MyCoolFunction()
 }
 ```
 
-If you're familiar with all of the dialog handler libraries available, you might be wondering sets this library apart from them. The simple answer is I've included numerous functions to quickly fetch specific/single values from dialog responses. Do you simply need to show quick yes/no confirmation dialog? No problem. Use `ShowAsyncConfirmationDialog`. What about buying a user-submitted quantity from an in-game shop? `ShowAsyncNumberInputDialog` has you covered. Examples usages can be found [here](https://github.com/TommyB123/tdialogs/edit/main/README.md#examples).
+If you're familiar with all of the dialog handler libraries available, you might be wondering sets this library apart from them. The simple answer is I've included numerous functions to quickly fetch specific/single values from dialog responses. Do you simply need to show quick yes/no confirmation dialog? No problem. Use `ShowAsyncConfirmationDialog`. What about buying a user-submitted quantity from an in-game shop? `ShowAsyncNumberInputDialog` has you covered. Examples usages can be found [here](https://github.com/TommyB123/tdialogs?tab=readme-ov-file#examples).
 
 As of version 1.1.0, automatically paginated dialogs are also included and can be created with `AddPaginatedDialogRow` and `ShowAsyncPaginatedDialog`. Full function arguments and example below.
 
