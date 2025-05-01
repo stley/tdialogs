@@ -2,7 +2,7 @@
 
 [![sampctl](https://img.shields.io/badge/sampctl-tdialogs-2f2f2f.svg?style=for-the-badge)](https://github.com/TommyB123/tdialogs)
 
-tdialogs is a library that provides various functions to handle dialog responses in SA-MP/open.mp servers asynchronously through the power of PawnPlus' task system.
+tdialogs is a library that provides various functions to handle dialog responses in open.mp servers asynchronously through the power of PawnPlus' task system.
 
 # Dependencies
 This library requires the following dependencies.
