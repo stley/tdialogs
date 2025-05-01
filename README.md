@@ -59,7 +59,7 @@ It's important to note that the list **MUST** be cleaned out by using `list_clea
 
 | Constant | Default Value | Description  |
 | ------------- | ------------- | ------------- |
-| `TDIALOG_DIALOG_ID_BEGIN`  | `1234`  | The library reserves 9 dialog IDs for each dialog type (not to be confused with dialog styles). is the first ID that will be used, followed by the 8 subsequent numbers after. Note any existing dialog IDs you have and adjust accordingly. |
+| `TDIALOG_DIALOG_ID_BEGIN`  | `1234`  | The library reserves 9 dialog IDs for each dialog type (not to be confused with dialog styles). `TDIALOG_DIALOG_ID_BEGIN` is the first ID that will be used, followed by the 8 subsequent numbers after. Note any existing dialog IDs you have and adjust accordingly. |
 | `PAGINATED_NEXT_TEXT`  | `"--> Next Page"`  | The string that will show when a paginated dialog prompts you to view the next page.  |
 | `PAGINATED_PREVIOUS_TEXT`  | `"<-- Previous Page"`  | The string that wil show when you can go back to a previous page in a paginated dialog.  |
 
