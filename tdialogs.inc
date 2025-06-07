@@ -92,6 +92,7 @@ public _pp@on_exit@tdialogs()
 
     PlayerConnectHandler = INVALID_CALLBACK_HANDLER;
     PlayerDisconnectHandler = INVALID_CALLBACK_HANDLER;
+    DialogResponseHandler = INVALID_CALLBACK_HANDLER;
 }
 
 forward TDialogs_PlayerConnect(playerid);
