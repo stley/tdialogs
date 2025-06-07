@@ -361,6 +361,7 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
                 new dialog_response[DIALOG_RESPONSE];
                 dialog_response[DIALOG_RESPONSE_RESPONSE] = false;
                 task_set_result_arr(task, dialog_response);
+                ResetPlayerPaginationVariables(playerid);
                 return 1;
             }
 
