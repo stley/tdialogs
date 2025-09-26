@@ -220,19 +220,29 @@ stock Task:ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page,
     new String:string = str_new("");
     if(tablist_header_text[0])
     {
-        format(PaginatedDialogHeaderText[playerid], 128, tablist_header_text);
-        str_append_format(string, tablist_header_text);
+        if(style != DIALOG_STYLE_TABLIST_HEADERS)
+            print("[tdialogs] Warning: Unexpected header text on async paginated dialog when style is not DIALOG_STYLE_TABLIST_HEADERS.");
+        else{
+            format(PaginatedDialogHeaderText[playerid], 128, tablist_header_text);
+            str_append_format(string, tablist_header_text);
+            if(strfind(string, "\n") == -1) str_append_format(string, "\n");
+        }
     }
 
     new rowcount = 0;
     for(new Iter:i = list_iter(rows, rows_per_page * PaginatedDialogOffset[playerid]); iter_inside(i); iter_move_next(i))
     {
-        if(rowcount > rows_per_page) break;
-
+        if(rowcount >= rows_per_page){
+            ++rowcount;
+            str_append_format(string, "\n");
+            continue;
+        }
         new row[PAGINATED_DIALOG_ROW];
         iter_get_arr(i, row);
         str_append_format(string, row[DialogRowText]);
         ++rowcount;
+        if(rowcount < rows_per_page) str_append_format(string, "\n");
+
     }
 
     if(PaginatedDialogOffset[playerid] != 0) str_append_format(string, "%s\n", PAGINATED_PREVIOUS_TEXT);
