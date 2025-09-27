@@ -1,6 +1,7 @@
 #if defined _tdialog_included
     #endinput
 #endif
+#define _tdialog_included
 
 #include <open.mp>
 #include <PawnPlus>
