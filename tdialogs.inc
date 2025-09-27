@@ -216,7 +216,7 @@ stock Task:ShowAsyncEntityIndexDialog_s(playerid, DIALOG_STYLE:style, String:tit
     return SendTDialog_s(playerid, TDIALOG_ID_OPTIONS_INDEX, style, title, body, button1, button2);
 }
 
-stock Task:ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page, const title[], const button1[], const button2[], const tablist_header_text[] = "")
+stock Task:ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page, const title[], const button1[], const button2[], const tablist_header_text[] = "", Task:existingtask = INVALID_TASK)
 {
     if(!list_valid(PaginatedDialogRowList[playerid]) || !list_size(PaginatedDialogRowList[playerid]))
     {
@@ -246,7 +246,17 @@ stock Task:ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page,
     if(rowcount > rows_per_page) str_append_format(string, "%s\n", PAGINATED_NEXT_TEXT);
 
     PaginatedDialogRowsPerPage[playerid] = rows_per_page;
-    return SendTDialog_s(playerid, TDIALOG_ID_PAGINATED, style, str_new(title), string, button1, button2);
+    if(task_valid(existingtask))
+    {
+        //reuse an existing task when we're switching through the dialog's pages
+        ShowPlayerDialog_s(playerid, TDIALOG_ID_PAGINATED, style, str_new(title), string, button1, button2);
+        DialogTask[playerid] = existingtask;
+        return existingtask;
+    }
+    else
+    {
+        return SendTDialog_s(playerid, TDIALOG_ID_PAGINATED, style, str_new(title), string, button1, button2);
+    }
 }
 
 forward TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext[]);
@@ -377,7 +387,7 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
 
                 new DIALOG_STYLE:style, title[64], body[4096], button1[12], button2[12];
                 GetPlayerDialogData(playerid, style, title, 64, body, 4096, button1, 12, button2, 12); //why was this function written like this
-                task_bind(task, "_PaginatedDialogRedirect", "iissss", playerid, style, title, button1, button2, PaginatedDialogHeaderText[playerid]);
+                task_bind(task, "_PaginatedDialogRedirect", "iiissss", task, playerid, style, title, button1, button2, PaginatedDialogHeaderText[playerid]);
                 return 1;
             }
             else if(!strcmp(inputtext, PAGINATED_PREVIOUS_TEXT))
@@ -386,7 +396,7 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
 
                 new DIALOG_STYLE:style, title[64], body[4096], button1[12], button2[12];
                 GetPlayerDialogData(playerid, style, title, 64, body, 4096, button1, 12, button2, 12); //why was this function written like this
-                task_bind(task, "_PaginatedDialogRedirect", "iissss", playerid, style, title, button1, button2, PaginatedDialogHeaderText[playerid]);
+                task_bind(task, "_PaginatedDialogRedirect", "iiissss", task, playerid, style, title, button1, button2, PaginatedDialogHeaderText[playerid]);
                 return 1;
             }
             else
@@ -396,7 +406,9 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
                 dialog_response[DIALOG_RESPONSE_LISTITEM] = listitem + (PaginatedDialogRowsPerPage[playerid] * PaginatedDialogOffset[playerid]);
                 dialog_response[DIALOG_RESPONSE_EXTRAID] = list_get(PaginatedDialogRowList[playerid], dialog_response[DIALOG_RESPONSE_LISTITEM], DialogRowExtra);
                 format(dialog_response[DIALOG_RESPONSE_INPUTTEXT], 128, inputtext);
+
                 task_set_result_arr(task, dialog_response);
+                ResetPlayerPaginationVariables(playerid);
                 return 1;
             }
         }
@@ -465,8 +477,8 @@ public _InputDialogErrorRedirect(playerid, dialogid, const title[], const body[]
     return wait_ms(1);
 }
 
-forward _PaginatedDialogRedirect(playerid, DIALOG_STYLE:style, const title[], List:rows, const button1[], const button2[], const tablist_header_text[]);
-public _PaginatedDialogRedirect(playerid, DIALOG_STYLE:style, const title[], List:rows, const button1[], const button2[], const tablist_header_text[])
+forward _PaginatedDialogRedirect(Task:task, playerid, DIALOG_STYLE:style, const title[], const button1[], const button2[], const tablist_header_text[]);
+public _PaginatedDialogRedirect(Task:task, playerid, DIALOG_STYLE:style, const title[], const button1[], const button2[], const tablist_header_text[])
 {
-    return task_await(ShowAsyncPaginatedDialog(playerid, style, PaginatedDialogRowsPerPage[playerid], title, PaginatedDialogRowList[playerid], button1, button2, tablist_header_text));
+    return task_wait(ShowAsyncPaginatedDialog(playerid, style, PaginatedDialogRowsPerPage[playerid], title, button1, button2, tablist_header_text, task));
 }
