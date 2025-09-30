@@ -17,6 +17,7 @@ static enum
     TDIALOG_ID_NUMBER_INPUT,
     TDIALOG_ID_FLOAT_INPUT,
     TDIALOG_ID_STRING_INPUT,
+    TDIALOG_ID_PASSWORD_INPUT,
     TDIALOG_ID_LISTITEM_TEXT,
     TDIALOG_ID_LISTITEM_INDEX,
     TDIALOG_ID_CONFIRMATION,
@@ -168,12 +169,12 @@ stock Task:ShowAsyncStringInputDialog_s(playerid, String:title, String:body, con
 
 stock Task:ShowAsyncPasswordDialog(playerid, const title[], const body[], const button1[], const button2[])
 {
-    return SendTDialog(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
+    return SendTDialog(playerid, TDIALOG_ID_PASSWORD_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncPasswordDialog_s(playerid, String:title, String:body, const button1[], const button2[])
 {
-    return SendTDialog_s(playerid, TDIALOG_ID_STRING_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
+    return SendTDialog_s(playerid, TDIALOG_ID_PASSWORD_INPUT, DIALOG_STYLE_PASSWORD, title, body, button1, button2);
 }
 
 stock Task:ShowAsyncListitemTextDialog(playerid, DIALOG_STYLE:style, const title[], const body[], const button1[], const button2[])
@@ -323,7 +324,7 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
 
             task_set_result(task, value);
         }
-        case TDIALOG_ID_STRING_INPUT, TDIALOG_ID_LISTITEM_TEXT:
+        case TDIALOG_ID_STRING_INPUT, TDIALOG_ID_PASSWORD_INPUT, TDIALOG_ID_LISTITEM_TEXT:
         {
             if(!response)
             {
@@ -331,12 +332,12 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
                 return 1;
             }
 
-            if(dialogid == TDIALOG_ID_STRING_INPUT && isnull(inputtext))
+            if((dialogid == TDIALOG_ID_STRING_INPUT || dialogid == TDIALOG_ID_PASSWORD_INPUT) && isnull(inputtext))
             {
                 //show the dialog again when a player doesn't enter any text
                 new DIALOG_STYLE:style, title[64], body[4096], button1[12], button2[12];
                 GetPlayerDialogData(playerid, style, title, 64, body, 4096, button1, 12, button2, 12); //why was this function written like this
-                task_bind(task, "_InputDialogErrorRedirect", "iissss", playerid, TDIALOG_ID_STRING_INPUT, title, body, button1, button2);
+                task_bind(task, "_InputDialogErrorRedirect", "iissss", playerid, dialogid, title, body, button1, button2);
                 return 1;
             }
 
@@ -488,6 +489,7 @@ public _InputDialogErrorRedirect(playerid, dialogid, const title[], const body[]
         case TDIALOG_ID_NUMBER_INPUT: return task_await(ShowAsyncNumberInputDialog(playerid, title, body, button1, button2));
         case TDIALOG_ID_FLOAT_INPUT: return task_await(ShowAsyncFloatInputDialog(playerid, title, body, button1, button2));
         case TDIALOG_ID_STRING_INPUT: return task_await(ShowAsyncStringInputDialog(playerid, title, body, button1, button2));
+        case TDIALOG_ID_PASSWORD_INPUT: return task_await(ShowAsyncPasswordDialog(playerid, title, body, button1, button2));
     }
     return wait_ms(1);
 }
