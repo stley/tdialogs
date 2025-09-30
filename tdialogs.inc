@@ -436,6 +436,14 @@ stock AddPaginatedDialogRow(playerid, const text[], extraid = 0)
     return true;
 }
 
+stock AddPaginatedDialogRow_s(playerid, String:text, extraid = 0)
+{
+    new buffer[256];
+    str_get(text, buffer);
+
+    return AddPaginatedDialogRow(playerid, buffer, extraid);
+}
+
 static ResetPlayerDialogVariables(playerid)
 {
     DeleteDialogTask(playerid);
