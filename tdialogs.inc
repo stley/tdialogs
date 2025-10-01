@@ -80,6 +80,8 @@ native ShowPlayerDialog_s(playerid, dialogid, DIALOG_STYLE:style, ConstAmxString
 forward _pp@on_init@tdialogs();
 public _pp@on_init@tdialogs()
 {
+    wait_ticks(1);
+
     PlayerConnectHandler = pawn_register_callback("OnPlayerConnect", "TDialogs_PlayerConnect");
     PlayerDisconnectHandler = pawn_register_callback("OnPlayerDisconnect", "TDialogs_PlayerDisconnect");
     DialogResponseHandler = pawn_register_callback("OnDialogResponse", "TDialogs_DialogResponse");
