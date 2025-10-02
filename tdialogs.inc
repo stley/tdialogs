@@ -204,7 +204,7 @@ stock Task:ShowAsyncConfirmationDialog(playerid, const title[], const body[], co
     return SendTDialog(playerid, TDIALOG_ID_CONFIRMATION, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
 }
 
-stock Task:ShowAsyncConfirmationDialog_s(playerid, ConstAmxStrring:title, ConstAmxStrring:body, const button1[], const button2[] = "")
+stock Task:ShowAsyncConfirmationDialog_s(playerid, String:title, String:body, const button1[], const button2[] = "")
 {
     return SendTDialog_s(playerid, TDIALOG_ID_CONFIRMATION, DIALOG_STYLE_MSGBOX, title, body, button1, button2);
 }
