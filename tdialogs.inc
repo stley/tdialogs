@@ -231,7 +231,7 @@ stock Task:ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page,
     if(tablist_header_text[0])
     {
         if(style != DIALOG_STYLE_TABLIST_HEADERS)
-            print("[tdialogs] Warning: Specified \"tablist_header_text\" when dialog style is not DIALOG_STYLE_TABLIST_HEADERS");
+            print("[tdialogs] Warning: Specified \"tablist_header_text\" when dialog style is not DIALOG_STYLE_TABLIST_HEADERS.");
         else{
             format(PaginatedDialogHeaderText[playerid], 128, tablist_header_text);
             str_append_format(string, tablist_header_text);
