@@ -156,7 +156,7 @@ If the player closes the dialog/presses ESC, `-1` is returned.
 Used with `new id = await ShowAsyncEntityIndexDialog(...)`
 
 ```pawn
-ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page, const title[], List:rows, const button1[], const button2[], const tablist_header_text[] = "")
+ShowAsyncPaginatedDialog(playerid, DIALOG_STYLE:style, rows_per_page, const title[], const button1[], const button2[], const tablist_header_text[] = "")
 ```
 Shows an asynchronous dialog that paginates supplied text based on the supplied rows per page. Returns a full dialog response.
 
@@ -167,7 +167,7 @@ The `tablist_header_text` argument is only to be used with the `DIALOG_STYLE_TAB
 Used with `await_arr(response) ShowAsyncPaginatedDialog`
 
 ```pawn
-AddPaginatedDialogRow(List:list, const text[], extraid = 0)
+AddPaginatedDialogRow(playerid, const text[], extraid = 0)
 ```
 Adds a row to a paginated dialog. extraid argument can be used to pass additional IDs relevant to the line of text you're appending.
 
