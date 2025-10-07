@@ -431,6 +431,11 @@ public TDialogs_DialogResponse(playerid, dialogid, response, listitem, inputtext
 
 stock AddPaginatedDialogRow(playerid, const text[], extraid = 0)
 {
+    if(strfind(text, "\n") == -1)
+    {
+        printf("[tdialogs] The following string was passed to AddPaginatedDialogRow without a line break: %s", text);
+        return false;
+    }
 
     if(!list_valid(PaginatedDialogRowList[playerid]))
     {
